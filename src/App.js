@@ -49,6 +49,9 @@ const tempWatchedData = [
   },
 ];
 
+const average = (arr) =>
+  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+
 export default function App() {
   return (
     <>
@@ -57,7 +60,10 @@ export default function App() {
       <main className="main">
         <SearchedMoviePart tempMovieData={tempMovieData} />
 
-        <WatchedMovieListPart tempWatchedData={tempWatchedData} />
+        <WatchedMovieListPart
+          tempWatchedData={tempWatchedData}
+          average={average}
+        />
       </main>
     </>
   );
