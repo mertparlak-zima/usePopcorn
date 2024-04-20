@@ -1,7 +1,7 @@
-export default function MovieList({ movies }) {
+export default function MovieList({ tempMovieData }) {
   return (
     <ul className="list">
-      {movies?.map((movie) => (
+      {tempMovieData?.map((movie) => (
         <li key={movie.imdbID}>
           <img src={movie.Poster} alt={`${movie.Title} poster`} />
           <h3>{movie.Title}</h3>

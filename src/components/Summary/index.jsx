@@ -1,7 +1,10 @@
 import { useState } from "react";
 
-export default function Summary({ tempWatchedData, average }) {
+export default function Summary({ tempWatchedData }) {
   const [watched, setWatched] = useState(tempWatchedData);
+
+  const average = (arr) =>
+    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
