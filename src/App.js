@@ -1,7 +1,8 @@
 import NavBar from "./components/NavBar";
 import SearchedMoviePart from "./components/SearchedMoviePart";
 import WatchedMovieListPart from "./components/WatchedMovieListPart";
-
+import MyMovieList from "./components/MyMovieList";
+import Summary from "./components/Summary";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -60,10 +61,10 @@ export default function App() {
       <main className="main">
         <SearchedMoviePart tempMovieData={tempMovieData} />
 
-        <WatchedMovieListPart
-          tempWatchedData={tempWatchedData}
-          average={average}
-        />
+        <WatchedMovieListPart>
+          <Summary tempWatchedData={tempWatchedData} average={average} />
+          <MyMovieList tempWatchedData={tempWatchedData} />
+        </WatchedMovieListPart>
       </main>
     </>
   );

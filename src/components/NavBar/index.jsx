@@ -14,7 +14,7 @@ export default function NavBar({ tempMovieData }) {
       <Search />
 
       <p className="num-results">
-        Found <strong>{movies.length}</strong> results
+        Found <strong>{movies.length ? movies.length : 0}</strong> results
       </p>
     </nav>
   );

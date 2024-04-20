@@ -1,8 +1,6 @@
 import { useState } from "react";
-import MyMovieList from "../MyMovieList";
-import Summary from "../Summary";
 
-export default function WatchedMovieListPart({ tempWatchedData, average }) {
+export default function WatchedMovieListPart({ children }) {
   const [isOpen2, setIsOpen2] = useState(true);
 
   return (
@@ -13,12 +11,7 @@ export default function WatchedMovieListPart({ tempWatchedData, average }) {
       >
         {isOpen2 ? "–" : "+"}
       </button>
-      {isOpen2 && (
-        <>
-          <Summary tempWatchedData={tempWatchedData} average={average} />
-          <MyMovieList tempWatchedData={tempWatchedData} />
-        </>
-      )}
+      {isOpen2 && <>{children}</>}
     </div>
   );
 }
