@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NavBar from "./components/NavBar";
 import SearchedMoviePart from "./components/SearchedMoviePart";
 import WatchedMovieListPart from "./components/WatchedMovieListPart";
@@ -50,21 +49,15 @@ const tempWatchedData = [
   },
 ];
 
-const average = (arr) =>
-  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
-
   return (
     <>
-      <NavBar movies={movies} />
+      <NavBar tempMovieData={tempMovieData} />
 
       <main className="main">
-        <SearchedMoviePart movies={movies} />
+        <SearchedMoviePart tempMovieData={tempMovieData} />
 
-        <WatchedMovieListPart watched={watched} average={average} />
+        <WatchedMovieListPart tempWatchedData={tempWatchedData} />
       </main>
     </>
   );
