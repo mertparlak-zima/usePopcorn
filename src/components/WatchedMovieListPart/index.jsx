@@ -1,13 +1,12 @@
 import WathchedMovieList from "../WatchedMovieListPart/WatchedMovieList";
+import { useState } from "react";
 
-export default function WatchedMovieListPart({
-  avgImdbRating,
-  avgUserRating,
-  avgRuntime,
-  isOpen2,
-  setIsOpen2,
-  watched,
-}) {
+export default function WatchedMovieListPart({ watched, average }) {
+  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
+  const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const avgRuntime = average(watched.map((movie) => movie.runtime));
+  const [isOpen2, setIsOpen2] = useState(true);
+
   return (
     <div className="box">
       <button

@@ -1,4 +1,8 @@
-export default function SearchedMoviePart({ movies, isOpen1, setIsOpen1 }) {
+import { useState } from "react";
+
+export default function SearchedMoviePart({ movies }) {
+  const [isOpen1, setIsOpen1] = useState(true);
+
   return (
     <div className="box">
       <button
