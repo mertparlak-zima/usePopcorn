@@ -3,6 +3,7 @@ import Box from "./components/Box";
 import MyMovieList from "./components/MyMovieList";
 import Summary from "./components/Summary";
 import MovieList from "./components/MovieList";
+import Main from "./components/Main";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -55,7 +56,7 @@ export default function App() {
     <>
       <NavBar tempMovieData={tempMovieData} />
 
-      <main className="main">
+      <Main>
         <Box>
           <MovieList tempMovieData={tempMovieData} />
         </Box>
@@ -63,7 +64,7 @@ export default function App() {
           <Summary tempWatchedData={tempWatchedData} />
           <MyMovieList tempWatchedData={tempWatchedData} />
         </Box>
-      </main>
+      </Main>
     </>
   );
 }
