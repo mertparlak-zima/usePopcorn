@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-export default function MyMovieList({ tempWatchedData }) {
-  const [watched, setWatched] = useState(tempWatchedData);
-
+export default function MyMovieList({ watched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (

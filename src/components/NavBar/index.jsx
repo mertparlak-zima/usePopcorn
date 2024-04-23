@@ -1,9 +1,6 @@
 import Search from "../Search";
-import { useState } from "react";
 
-export default function NavBar({ tempMovieData }) {
-  const [movies, setMovies] = useState(tempMovieData);
-
+export default function NavBar({ movies }) {
   return (
     <nav className="nav-bar">
       <div className="logo">

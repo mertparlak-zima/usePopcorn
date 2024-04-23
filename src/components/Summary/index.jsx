@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-export default function Summary({ tempWatchedData }) {
-  const [watched, setWatched] = useState(tempWatchedData);
-
+export default function Summary({ watched }) {
   const average = (arr) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
