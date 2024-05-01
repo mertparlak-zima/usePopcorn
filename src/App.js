@@ -32,6 +32,8 @@ export default function App() {
         if (!response.ok) throw new Error("Failed to fetch movies data");
 
         const data = await response.json();
+
+        if (data.Response === "False") throw new Error(`${2}is not found`);
         setMovies(data.Search);
       } catch (err) {
         console.error(err.message);
