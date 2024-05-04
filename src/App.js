@@ -89,6 +89,9 @@ export default function App() {
             <SelectedMovie
               selectedMovieId={selectedMovieId}
               handleCloseMovie={handleCloseMovie}
+              API_KEY={API_KEY}
+              setError={setError}
+              error={error}
             />
           ) : (
             <>

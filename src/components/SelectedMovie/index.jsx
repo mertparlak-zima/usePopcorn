@@ -1,10 +1,63 @@
-export default function SelectedMovie({ selectedMovieId, handleCloseMovie }) {
+import { useEffect, useState } from "react";
+
+export default function SelectedMovie({
+  selectedMovieId,
+  handleCloseMovie,
+  API_KEY,
+  setError,
+  error,
+}) {
+  const [movie, setMovie] = useState({});
+  useEffect(function () {
+    async function fetchSelectedMovie() {
+      try {
+        const response = await fetch(`${API_KEY}&i=${selectedMovieId}`);
+        const data = await response.json();
+        console.log(data);
+
+        if (data.Response === "True") {
+          setMovie(data);
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    fetchSelectedMovie();
+  }, []);
   return (
     <>
-      <div className="details">{selectedMovieId}</div>;
-      <button className="btn-back" onClick={handleCloseMovie}>
-        &larr;
-      </button>
+      <div className="details">
+        <header>
+          <button className="btn-back" onClick={handleCloseMovie}>
+            &larr;
+          </button>
+
+          <img src={movie.Poster} alt={`Poster of ${movie.Title} movie`} />
+
+          <div className="details-overview">
+            <h2>{movie.Title}</h2>
+            <p>{movie.Director}</p>
+            <p>
+              {movie.Released} <strong>-</strong> {movie.Runtime}
+            </p>
+            <p>{movie.Genre}</p>
+            <p>
+              <span>⭐</span>
+              {movie.imdbRating} IMDb Rating
+            </p>
+          </div>
+        </header>
+        <section>
+          <p>
+            <em>{movie.Plot}</em>
+          </p>
+          <p>Starring {movie.Actors}</p>
+          <p>
+            Directing by <strong>{movie.Director}</strong>
+          </p>
+        </section>
+      </div>
+      ;
     </>
   );
 }
