@@ -33,6 +33,19 @@ export default function App() {
     setWatched((watched) => [...watched, movie]);
   }
 
+  function updateWatchedMovieRating(selectedMovieId, newRating) {
+    if (!watched.length) return;
+
+    const updatedWatched = watched.map((movie) => {
+      if (movie.imdbID === selectedMovieId) {
+        movie.userRating = newRating;
+      }
+      return movie;
+    });
+
+    setWatched(updatedWatched);
+  }
+
   useEffect(
     function () {
       async function fetchMovies() {
@@ -96,6 +109,8 @@ export default function App() {
               handleCloseMovie={handleCloseMovie}
               API_KEY={API_KEY}
               handleAddToWatched={handleAddToWatched}
+              watched={watched}
+              updateWatchedMovieRating={updateWatchedMovieRating}
             />
           ) : (
             <>

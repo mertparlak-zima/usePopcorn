@@ -8,6 +8,8 @@ export default function SelectedMovie({
   handleCloseMovie,
   API_KEY,
   handleAddToWatched,
+  watched,
+  updateWatchedMovieRating,
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +53,12 @@ export default function SelectedMovie({
   } = movie;
 
   function handleAddWatchList() {
+    updateWatchedMovieRating(selectedMovieId, userRating);
+
+    if (watched.find((movie) => movie.imdbID === selectedMovieId)) {
+      handleCloseMovie();
+      return;
+    }
     const newWatchedMovie = {
       imdbID: selectedMovieId,
       title,
@@ -99,6 +107,10 @@ export default function SelectedMovie({
                 starSize="24px"
                 starNumberFontSize="24px"
                 onSetRating={setUserRating}
+                defaultRating={
+                  watched.find((movie) => movie.imdbID === selectedMovieId)
+                    ?.userRating || 0
+                }
               />
               {userRating > 0 && (
                 <button className="btn-add" onClick={handleAddWatchList}>
