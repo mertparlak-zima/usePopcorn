@@ -49,7 +49,7 @@ export default function App() {
         }
       }
 
-      if (query.length < 3 || query === " " || query.length) {
+      if (query.length < 3) {
         setMovies([]);
         setError("");
         return;
