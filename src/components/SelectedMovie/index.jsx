@@ -7,10 +7,12 @@ export default function SelectedMovie({
   selectedMovieId,
   handleCloseMovie,
   API_KEY,
+  handleAddToWatched,
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [userRating, setUserRating] = useState(0);
 
   useEffect(
     function () {
@@ -20,7 +22,6 @@ export default function SelectedMovie({
           const response = await fetch(`${API_KEY}&i=${selectedMovieId}`);
           const data = await response.json();
           setIsLoading(false);
-          console.log(data);
 
           if (data.Response === "False") throw new Error(`Movie is not found`);
 
@@ -35,6 +36,34 @@ export default function SelectedMovie({
     },
     [selectedMovieId]
   );
+
+  const {
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating,
+    Plot: plot,
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+  } = movie;
+
+  function handleAddWatchList() {
+    const newWatchedMovie = {
+      imdbID: selectedMovieId,
+      title,
+      poster,
+      year,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+      userRating,
+    };
+
+    handleAddToWatched(newWatchedMovie);
+    handleCloseMovie();
+  }
   return (
     <div className="details">
       {isLoading ? (
@@ -48,18 +77,18 @@ export default function SelectedMovie({
               &larr;
             </button>
 
-            <img src={movie.Poster} alt={`Poster of ${movie.Title} movie`} />
+            <img src={poster} alt={`Poster of ${title} movie`} />
 
             <div className="details-overview">
-              <h2>{movie.Title}</h2>
-              <p>{movie.Director}</p>
+              <h2>{title}</h2>
+              <p>{director}</p>
               <p>
-                {movie.Released} <strong>-</strong> {movie.Runtime}
+                {released} <strong>-</strong> {runtime}
               </p>
-              <p>{movie.Genre}</p>
+              <p>{genre}</p>
               <p>
                 <span>⭐</span>
-                {movie.imdbRating} IMDb Rating
+                {imdbRating} IMDb Rating
               </p>
             </div>
           </header>
@@ -69,14 +98,20 @@ export default function SelectedMovie({
                 maxRatings={10}
                 starSize="24px"
                 starNumberFontSize="24px"
+                onSetRating={setUserRating}
               />
+              {userRating > 0 && (
+                <button className="btn-add" onClick={handleAddWatchList}>
+                  + Add to list
+                </button>
+              )}
             </div>
             <p>
-              <em>{movie.Plot}</em>
+              <em>{plot}</em>
             </p>
-            <p>Starring {movie.Actors}</p>
+            <p>Starring {actors}</p>
             <p>
-              Directing by <strong>{movie.Director}</strong>
+              Directing by <strong>{director}</strong>
             </p>
           </section>
         </>

@@ -6,6 +6,14 @@ export default function Summary({ watched }) {
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
+  function handleNumber(num) {
+    if (num % 1 !== 0) {
+      return num.toFixed(1);
+    } else {
+      return num.toFixed();
+    }
+  }
+
   return (
     <div className="summary">
       <h2>Movies you watched</h2>
@@ -20,7 +28,9 @@ export default function Summary({ watched }) {
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>
+            {avgUserRating ? handleNumber(avgUserRating) : "Not Rated"}
+          </span>
         </p>
         <p>
           <span>⏳</span>
