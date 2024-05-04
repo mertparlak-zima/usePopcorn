@@ -1,6 +1,6 @@
 import Search from "../Search";
 
-export default function NavBar({ movies }) {
+export default function NavBar({ movies, children }) {
   return (
     <nav className="nav-bar">
       <div className="logo">
@@ -8,7 +8,7 @@ export default function NavBar({ movies }) {
         <h1>usePopcorn</h1>
       </div>
 
-      <Search />
+      {children}
 
       <p className="num-results">
         Found <strong>{movies.length ? movies.length : 0}</strong> results
