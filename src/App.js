@@ -8,15 +8,25 @@ import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/Error/ErrorMessage";
 import Search from "./components/Search";
+import SelectedMovie from "./components/SelectedMovie";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function App() {
-  const [query, setQuery] = useState("the fly");
+  const [query, setQuery] = useState("matrix");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  function handleSelectMovie(id) {
+    setSelectedMovieId(id === selectedMovieId ? null : id);
+  }
+
+  function handleCloseMovie() {
+    setSelectedMovieId(null);
+  }
 
   useEffect(
     function () {
@@ -69,12 +79,23 @@ export default function App() {
       <Main>
         <Box>
           {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} handleSelectMovie={handleSelectMovie} />
+          )}
           {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
-          <Summary watched={watched} />
-          <MyMovieList watched={watched} />
+          {selectedMovieId ? (
+            <SelectedMovie
+              selectedMovieId={selectedMovieId}
+              handleCloseMovie={handleCloseMovie}
+            />
+          ) : (
+            <>
+              <Summary watched={watched} />
+              <MyMovieList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
