@@ -9,6 +9,7 @@ import Loader from "./components/Loader";
 import ErrorMessage from "./components/Error/ErrorMessage";
 import Search from "./components/Search";
 import SelectedMovie from "./components/SelectedMovie";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -104,6 +105,7 @@ export default function App() {
           )}
         </Box>
       </Main>
+      <SpeedInsights />
     </>
   );
 }
