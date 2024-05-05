@@ -72,6 +72,19 @@ export default function SelectedMovie({
     handleAddToWatched(newWatchedMovie);
     handleCloseMovie();
   }
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = ` ${title} | usePopcorn`;
+
+      return function () {
+        document.title = "usePopcorn";
+      };
+    },
+    [title]
+  );
+
   return (
     <div className="details">
       {isLoading ? (
