@@ -18,6 +18,22 @@ export default function SelectedMovie({
 
   useEffect(
     function () {
+      function callBack(e) {
+        if (e.key === "Escape") {
+          handleCloseMovie();
+        }
+      }
+      document.addEventListener("keydown", callBack);
+
+      return function () {
+        document.removeEventListener("keydown", callBack);
+      };
+    },
+    [handleCloseMovie]
+  );
+
+  useEffect(
+    function () {
       async function fetchSelectedMovie() {
         try {
           setIsLoading(true);

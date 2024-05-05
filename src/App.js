@@ -78,9 +78,8 @@ export default function App() {
             throw new Error(`${query} is not found`);
           setMovies(data.Search);
         } catch (err) {
-          console.error(err.message);
-
           if (err.name !== "AbortError") {
+            console.error(err.message);
             setError(err.message);
           }
         } finally {
