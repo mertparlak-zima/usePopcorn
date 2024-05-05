@@ -36,7 +36,7 @@ export default function SelectedMovie({
       }
       fetchSelectedMovie();
     },
-    [selectedMovieId]
+    [selectedMovieId, API_KEY]
   );
 
   const {
