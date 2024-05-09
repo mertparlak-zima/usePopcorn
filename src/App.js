@@ -21,6 +21,10 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
+  function handleAddLocalStorageWatchedMovies(watchedMovie) {
+    localStorage.setItem("watchedMovies", JSON.stringify(watchedMovie));
+  }
+
   function handleSelectMovie(id) {
     setSelectedMovieId(id === selectedMovieId ? null : id);
   }
@@ -30,8 +34,32 @@ export default function App() {
   }
 
   function handleAddToWatched(movie) {
-    setWatched((watched) => [...watched, movie]);
+    setWatched((watched) => {
+      handleAddLocalStorageWatchedMovies([...watched, movie]);
+      return [...watched, movie];
+    });
   }
+
+  function handleDeleteWatchedMovies(watchedMovie) {
+    localStorage.setItem("watchedMovies", JSON.stringify(watchedMovie));
+  }
+
+  function handleDeleteWatchedMovie(id) {
+    setWatched((watched) => {
+      const filteredData = watched.filter((movie) => movie.imdbID !== id);
+      handleDeleteWatchedMovies(filteredData);
+      return filteredData;
+    });
+  }
+
+  // set initial localstorage data on watched usestate
+  useEffect(() => {
+    const storagedMovies = localStorage.getItem("watchedMovies");
+
+    if (storagedMovies) {
+      setWatched(JSON.parse(storagedMovies));
+    }
+  }, []);
 
   function updateWatchedMovieRating(selectedMovieId, newRating) {
     if (!watched.length) return;
@@ -44,10 +72,6 @@ export default function App() {
     });
 
     setWatched(updatedWatched);
-  }
-
-  function handleDeleteWatchedMovie(id) {
-    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
   useEffect(
