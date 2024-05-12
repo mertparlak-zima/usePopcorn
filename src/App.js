@@ -11,12 +11,12 @@ import Search from "./components/Search";
 import SelectedMovie from "./components/SelectedMovie";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
+import { useMovies } from "./customHooks/useMovies";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
 
   // buradaki fonksiyon sadece initial renderde calisacak rerenderde calismayacak
   const [watched, setWatched] = useState(function () {
@@ -26,9 +26,10 @@ export default function App() {
 
     return [];
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+
   const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  const { movies, isLoading, error } = useMovies(query, API_KEY, ErrorMessage);
 
   function handleAddLocalStorageWatchedMovies(watchedMovie) {
     localStorage.setItem("watchedMovies", JSON.stringify(watchedMovie));
@@ -73,57 +74,6 @@ export default function App() {
 
     setWatched(updatedWatched);
   }
-
-  useEffect(
-    function () {
-      const controller = new AbortController();
-
-      async function fetchMovies() {
-        try {
-          if (!API_KEY) {
-            console.error("API key is missing");
-            setError("API key is missing");
-            error && <ErrorMessage message={error} />;
-            return;
-          }
-
-          setIsLoading(true);
-          setError("");
-
-          const response = await fetch(`${API_KEY}&s=${query}`, {
-            signal: controller.signal,
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch movies data");
-
-          const data = await response.json();
-
-          if (data.Response === "False")
-            throw new Error(`${query} is not found`);
-          setMovies(data.Search);
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            console.error(err.message);
-            setError(err.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-
-      fetchMovies();
-      return function () {
-        controller.abort();
-      };
-    },
-    [query]
-  );
 
   return (
     <>
