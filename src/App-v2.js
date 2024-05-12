@@ -17,15 +17,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-
-  // buradaki fonksiyon sadece initial renderde calisacak rerenderde calismayacak
-  const [watched, setWatched] = useState(function () {
-    const storagedMovies = JSON.parse(localStorage.getItem("watchedMovies"));
-
-    if (storagedMovies) return storagedMovies;
-
-    return [];
-  });
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedMovieId, setSelectedMovieId] = useState(null);
@@ -60,6 +52,15 @@ export default function App() {
       return filteredData;
     });
   }
+
+  // set initial localstorage data on watched usestate
+  useEffect(() => {
+    const storagedMovies = localStorage.getItem("watchedMovies");
+
+    if (storagedMovies) {
+      setWatched(JSON.parse(storagedMovies));
+    }
+  }, []);
 
   function updateWatchedMovieRating(selectedMovieId, newRating) {
     if (!watched.length) return;
