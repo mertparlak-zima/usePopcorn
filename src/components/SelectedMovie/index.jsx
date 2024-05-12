@@ -52,9 +52,14 @@ export default function SelectedMovie({
           if (data.Response === "False") throw new Error(`Movie is not found`);
 
           setMovie(data);
+          setError("");
         } catch (err) {
-          console.error(err.message);
-          setError(err.message);
+          if (err.name !== "AbortError") {
+            console.error(err.message);
+            setError(err.message);
+            setIsLoading(false);
+          }
+        } finally {
           setIsLoading(false);
         }
       }
