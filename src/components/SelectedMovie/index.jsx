@@ -54,11 +54,9 @@ export default function SelectedMovie({
           setMovie(data);
           setError("");
         } catch (err) {
-          if (err.name !== "AbortError") {
-            console.error(err.message);
-            setError(err.message);
-            setIsLoading(false);
-          }
+          console.error(err.message);
+          setError(err.message);
+          setIsLoading(false);
         } finally {
           setIsLoading(false);
         }
