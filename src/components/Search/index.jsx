@@ -1,17 +1,13 @@
 import { useEffect, useRef } from "react";
+import { useKey } from "../../customHooks/useKey";
 
 export default function Search({ query, setQuery }) {
   const inputEl = useRef(null);
 
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (document.activeElement === inputEl.current) return;
-
-      if (e.key === "Enter") {
-        inputEl.current.focus();
-      }
-    });
-  }, []);
+  useKey("Enter", function () {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+  });
 
   return (
     <input
