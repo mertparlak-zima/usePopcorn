@@ -12,27 +12,20 @@ import SelectedMovie from "./components/SelectedMovie";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 import { useMovies } from "./customHooks/useMovies";
+import { useLocalStorageState } from "./customHooks/useLocalStorageState";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function App() {
   const [query, setQuery] = useState("");
-
-  // buradaki fonksiyon sadece initial renderde calisacak rerenderde calismayacak
-  const [watched, setWatched] = useState(function () {
-    const storagedMovies = JSON.parse(localStorage.getItem("watchedMovies"));
-
-    if (storagedMovies) return storagedMovies;
-
-    return [];
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watchedMovies");
 
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
   const { movies, isLoading, error } = useMovies(query, API_KEY, ErrorMessage);
 
   function handleAddLocalStorageWatchedMovies(watchedMovie) {
-    localStorage.setItem("watchedMovies", JSON.stringify(watchedMovie));
+    setWatched(watchedMovie, "watchedMovies");
   }
 
   function handleSelectMovie(id) {
