@@ -4,7 +4,7 @@ import MyMovieList from "./components/MyMovieList";
 import Summary from "./components/Summary";
 import MovieList from "./components/MovieList";
 import Main from "./components/Main";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/Error/ErrorMessage";
 import Search from "./components/Search";

@@ -1,5 +1,3 @@
-import Search from "../Search";
-
 export default function NavBar({ movies, children }) {
   return (
     <nav className="nav-bar">
